@@ -1,20 +1,77 @@
 
-package codeforces;
-
 // complete binary tree from 1 to N
 
 import static java.lang.System.out;
 import java.util.Arrays;
 import java.util.Scanner;
+// 792D
+public class PathBT {
+    
+    static Scanner scan = new Scanner(System.in);
+    public static void autoTest()
+    {
+        long big = scan.nextLong();
+        if (big>Long.MAX_VALUE)
+            return;
+        int N = (int)big;//scan.nextInt();   // 1 and 10^18
+        int TC = scan.nextInt();  // between 1 and 6
+        for (int i=0; i<TC; i++) {
+            int v = scan.nextInt(); // v<=n
+            String q = scan.nextLine();
+            if (q.isEmpty())
+                q = scan.nextLine();
+            new CBT(N).solve(q, v);
+        }
+    }
+    public static void main(String[] args) {
+        autoTest();
+    }
+}
 
-// N+1 = 2^k, root node is (N+1)/2
-// left side is smaller than parent, right side is bigger
 class ICBT
 {
-    int bt[];
-    public ICBT(int N)
+    long N;
+    long root;
+    ICBT(long N)
     {
-        bt = new int[N+1];
+        this.N = N;
+        root = (N+1)/2;
+    }
+    long parent(long m) {
+        if ( m==1)
+            return m;
+        return m/2;
+    }
+    long left(long m)
+    {
+        long l = (m<<1);
+        return l<=N?l:m;
+    }
+    long right(long m)
+    {
+        long r = (m<<1)+1;
+        return r<=N?r:m;
+    }
+    long find(long r, long val, long rigthExtra, long target)
+    {
+        if ( r>N)
+            return 0;
+        if (target ==val+rigthExtra)
+            return r;
+        else if (target < val+rigthExtra)
+            return find(2*r, val/2, rigthExtra, target);
+        else
+            return find(2*r+1, val/2, rigthExtra+val, target);
+    }
+}
+// N+1 = 2^k, root node is (N+1)/2
+// left side is smaller than parent, right side is bigger
+class CBT
+{
+    int bt[];
+    public CBT(int N)
+    {
+        int[]bt = new int[N+1];
         bt[0] = N;
         fill(1, (N+1)/2, 0);
     }
@@ -72,24 +129,5 @@ class ICBT
             //out.println(ind);
         }
         out.println(bt[ind]);
-    }
-}
-public class PathBT {
-    
-    static Scanner scan = new Scanner(System.in);
-    public static void autoTest()
-    {
-        int N = scan.nextInt();   // 1 and 10^18
-        int TC = scan.nextInt();  // between 1 and 6
-        for (int i=0; i<TC; i++) {
-            int v = scan.nextInt(); // 
-            String q = scan.nextLine();
-            if (q.isEmpty())
-                q = scan.nextLine();
-            new ICBT(N).solve(q, v);
-        }
-    }
-    public static void main(String[] args) {
-        autoTest();
     }
 }
