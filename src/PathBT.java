@@ -8,26 +8,26 @@ import java.util.Scanner;
 public class PathBT {
     
     static Scanner scan = new Scanner(System.in);
-    public static void autoTest()
+    public static void main(String[] args)
     {
+        scan = codeforces.CodeChef.getFileScanner("binaryTree792d-t17.txt");
         long big = scan.nextLong();
         if (big>Long.MAX_VALUE)
             return;
         int N = (int)big;//scan.nextInt();   // 1 and 10^18
         int TC = scan.nextInt();  // between 1 and 6
         for (int i=0; i<TC; i++) {
-            int v = scan.nextInt(); // v<=n
+            long v = scan.nextLong(); // v<=n
             String q = scan.nextLine();
             if (q.isEmpty())
                 q = scan.nextLine();
-            new CBT(N).solve(q, v);
+            //new ICBT(N).solve(q, v);
+            new ICBT(big).solve(q, v);
         }
-    }
-    public static void main(String[] args) {
-        autoTest();
     }
 }
 
+// a virtual or imaginary complete binary search tree without real storage
 class ICBT
 {
     long N;
@@ -36,6 +36,8 @@ class ICBT
     {
         this.N = N;
         root = (N+1)/2;
+        //out.println(N);
+        //out.println(root);
     }
     long parent(long m) {
         if ( m==1)
@@ -54,14 +56,51 @@ class ICBT
     }
     long find(long r, long val, long rigthExtra, long target)
     {
-        if ( r>N)
+        if ( r>N) {
+            out.println("r="+r+" N="+N+" val="+val+" rigthExtra="+rigthExtra+" target="+target);
             return 0;
+        }
         if (target ==val+rigthExtra)
             return r;
         else if (target < val+rigthExtra)
             return find(2*r, val/2, rigthExtra, target);
         else
             return find(2*r+1, val/2, rigthExtra+val, target);
+    }
+    
+    long findValue(long index)
+    {
+        // first find which tree level by multiplying 2
+        if ( index>N)
+            return 0;
+        long leadValue=root;
+        long leadIndex=1;
+        while ( 2*leadIndex <= index) {
+            leadIndex *= 2;
+            leadValue /= 2;
+        }
+        return leadValue+leadValue*2*(index-leadIndex);
+    }
+    void solve(String q, long v)
+    {
+        long ind=find(1, root, 0, v); // find the vertex with value v
+        //out.println(ind);
+        for (char m: q.toCharArray()) {
+            switch(m) {
+                case 'U':
+                    ind = parent(ind);
+                    break;
+                case 'R':
+                    ind = right(ind);
+                    break;
+                case 'L':
+                    ind = left(ind);
+                    break;
+            }
+            //out.println(ind);
+        }
+        //out.println(ind);
+        out.println(findValue(ind));
     }
 }
 // N+1 = 2^k, root node is (N+1)/2
@@ -71,7 +110,7 @@ class CBT
     int bt[];
     public CBT(int N)
     {
-        int[]bt = new int[N+1];
+        bt = new int[N+1];
         bt[0] = N;
         fill(1, (N+1)/2, 0);
     }
@@ -128,6 +167,7 @@ class CBT
             }
             //out.println(ind);
         }
+        //out.println(ind);
         out.println(bt[ind]);
     }
 }
