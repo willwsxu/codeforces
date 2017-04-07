@@ -27,7 +27,8 @@ public class PathBT {
     }
 }
 
-// a virtual or imaginary complete binary search tree without real storage
+// a virtual or imaginary complete binary search tree without real storage  (in contrast to CBT class)
+// store values 1 to N in a specific way: any value on the left if smaller than tree on the right
 class ICBT
 {
     long N;
@@ -105,6 +106,7 @@ class ICBT
 }
 // N+1 = 2^k, root node is (N+1)/2
 // left side is smaller than parent, right side is bigger
+// only works if N is int. array max size is max int. too much memory for long
 class CBT
 {
     int bt[];
