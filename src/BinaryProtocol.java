@@ -16,6 +16,8 @@ public class BinaryProtocol {
             else {
                 ans = ans*10 +count;
                 count=0;
+                if (i==s.length()-1) // special case that 0 is not separator if it is at end
+                    ans *= 10;
             }
         }
         if (count>0)
