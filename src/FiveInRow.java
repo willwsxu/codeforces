@@ -15,7 +15,7 @@ import java.util.Scanner;
 public class FiveInRow {
     String []board=new String[10];
     
-    boolean checkOne(char[] seq, int s)
+    static boolean checkOne(char[] seq, int s)
     {
         int x=1;
         int dot=0;
@@ -44,7 +44,7 @@ public class FiveInRow {
         return seq[end]=='.';
     }
     // find any 5 in a row in a sequence
-    boolean scanSequence(char[] seq)
+    static boolean scanSequence(char[] seq)
     {
         if (seq.length<5)
             return false;
@@ -206,10 +206,21 @@ public class FiveInRow {
         }
         return false;
     }
+    
+    static void test()
+    {
+        out.println(scanSequence(new char []{'X', 'X', 'X', 'X', '.'}));
+        out.println(scanSequence(new char []{'.', 'X', 'X', 'X', 'X'}));
+        out.println(scanSequence(new char []{'X', 'X', '.', 'X', 'X'}));
+        out.println(scanSequence(new char []{'X', 'X', 'X', 'X', 'O'}));
+        out.println(scanSequence(new char []{'X', 'X', '.', 'X', '.'}));
+        out.println(scanSequence(new char []{'X', 'X', '.', 'X', '.','X','X','X'}));
+    }
    
     static Scanner sc = new Scanner(System.in);
     public static void main(String[] args)
     {        
-        out.println(new FiveInRow().solve()?"YES":"NO");
+        test();
+        //out.println(new FiveInRow().solve()?"YES":"NO");
     }
 }
