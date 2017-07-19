@@ -1,5 +1,9 @@
 
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
 import static java.lang.System.out;
+import java.util.Arrays;
 import java.util.Scanner;
 
 /*
@@ -20,6 +24,7 @@ public class FiveInRow {
         int x=1;
         int dot=0;
         int end=s+1;
+        //out.println(Arrays.toString(seq)+" "+s);
         for (; end<seq.length; end++) {
             if (seq[end]=='X') {
                 x++;
@@ -46,6 +51,7 @@ public class FiveInRow {
     // find any 5 in a row in a sequence
     static boolean scanSequence(char[] seq)
     {
+        //out.println(Arrays.toString(seq)+" scan");
         if (seq.length<5)
             return false;
         boolean skip=false;
@@ -194,15 +200,17 @@ public class FiveInRow {
     
     boolean solve()
     {
+        char seq[]=new char[board.length];
         for (int i=0; i<board.length; i++) {
-            for (int j=0; j<board[i].length(); j++) {
-                if (board[i].charAt(j)=='X') {
-                    if ( horizontal(i, j))
-                        return true;
-                    if ( vertical(i, j))
-                        return true;
-                }
-            }
+            for (int j=0; j<board[i].length(); j++) //horizontal
+                seq[j]=board[i].charAt(j);
+            if ( scanSequence(seq) )
+                return true;
+            
+            for (int j=0; j<board[i].length(); j++) //verticl
+                seq[j]=board[j].charAt(i);
+            if ( scanSequence(seq) )
+                return true;            
         }
         return false;
     }
@@ -217,10 +225,31 @@ public class FiveInRow {
         out.println(scanSequence(new char []{'X', 'X', '.', 'X', '.','X','X','X'}));
     }
    
+    public static Scanner getFileScanner(String file)
+    {
+        try {
+            return new Scanner( new FileReader( new File(file)));
+        }
+        catch (IOException e)
+        {
+        }
+        return new Scanner(System.in);
+    }
+    static void test2()
+    {
+        sc=getFileScanner(".\\test\\FiveInARow-t.txt");
+        int T=sc.nextInt();
+        while (T-->0) {
+            String result=new FiveInRow().solve()?"YES":"NO";
+            String expect = sc.next();
+            out.println(result.equals(expect)?"Pass":"Fail");
+        }
+    }
+
     static Scanner sc = new Scanner(System.in);
     public static void main(String[] args)
-    {        
-        test();
+    {     
+        test2();
         //out.println(new FiveInRow().solve()?"YES":"NO");
     }
 }
