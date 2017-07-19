@@ -3,7 +3,8 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import static java.lang.System.out;
-import java.util.Arrays;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 /*
@@ -207,10 +208,24 @@ public class FiveInRow {
             if ( scanSequence(seq) )
                 return true;
             
-            for (int j=0; j<board[i].length(); j++) //verticl
+            for (int j=0; j<board[i].length(); j++) //vertical
                 seq[j]=board[j].charAt(i);
             if ( scanSequence(seq) )
                 return true;            
+        }
+        // from (0,0) to (9,9)
+        for (int i=4; i<10; i++) { //r+c=i
+            seq = new char[i+1];
+            for (int j=0; j<=i; j++)
+                seq[j]=board[i-j].charAt(j);
+            if ( scanSequence(seq) )
+                return true;  
+            if (i==9)
+                break;
+            for (int j=0; j<=i; j++)
+                seq[j]=board[9-j].charAt(9-i+j);    // r+c=18-i   
+            if ( scanSequence(seq) )
+                return true;   
         }
         return false;
     }
