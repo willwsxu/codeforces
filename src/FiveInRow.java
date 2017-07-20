@@ -3,20 +3,13 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import static java.lang.System.out;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Arrays;
 import java.util.Scanner;
 
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * place X on 10x10 grid, check if going to win in next move
  */
 
-/**
- *
- * @author Andy
- */
 public class FiveInRow {
     String []board=new String[10];
     
@@ -213,19 +206,31 @@ public class FiveInRow {
             if ( scanSequence(seq) )
                 return true;            
         }
-        // from (0,0) to (9,9)
-        for (int i=4; i<10; i++) { //r+c=i
+        for (int i=4; i<10; i++) { 
+            // from (0,0) to (9,9), forward diagonal
+            //r+c=i
             seq = new char[i+1];
             for (int j=0; j<=i; j++)
                 seq[j]=board[i-j].charAt(j);
             if ( scanSequence(seq) )
                 return true;  
-            if (i==9)
-                break;
-            for (int j=0; j<=i; j++)
-                seq[j]=board[9-j].charAt(9-i+j);    // r+c=18-i   
+            if (i<9) {
+                for (int j=0; j<=i; j++)
+                    seq[j]=board[9-j].charAt(9-i+j);    // r+c=18-i   
+                if ( scanSequence(seq) )
+                    return true;  
+            }
+            // from (9, 0) to (0,9), backward diagonal 
+            for (int j=i; j>=0; j--)
+                seq[j]=board[j+9-i].charAt(j); // r-c=9-i
             if ( scanSequence(seq) )
-                return true;   
+                return true;  
+            if (i<9) {
+                for (int j=9-i; j<10; j++)
+                    seq[j+i-9]=board[j+i-9].charAt(j); //c-r=9-i
+                if ( scanSequence(seq) )
+                    return true;  
+            }
         }
         return false;
     }
@@ -264,7 +269,6 @@ public class FiveInRow {
     static Scanner sc = new Scanner(System.in);
     public static void main(String[] args)
     {     
-        test2();
-        //out.println(new FiveInRow().solve()?"YES":"NO");
+        out.println(new FiveInRow().solve()?"YES":"NO");
     }
 }
