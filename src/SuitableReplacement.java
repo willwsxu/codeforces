@@ -1,0 +1,81 @@
+
+import static java.lang.System.out;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
+
+/*
+ * 825D
+ * Any two letters can be swapped positions, these operations can be performed 
+ * arbitrary number of times over any pair of positions. Among all resulting strings s, 
+ * you choose the one with the largest number of non-intersecting occurrences of string t. 
+ * Suitability is this number of occurrences.
+
+ * You should replace all '?' characters with small Latin letters in such a way 
+ * that the suitability of string s is maximal.
+ */
+
+public class SuitableReplacement {
+    SuitableReplacement()
+    {
+        String s=sc.next();  // 1 ≤ |s| ≤ 10^6
+        String t=sc.next();  // 1 ≤ |s| ≤ 10^6
+        solve(s,t);
+    }
+    static final int ALPHA=26;
+    int []letters1=new int[ALPHA];        
+    int []letters2=new int[ALPHA];
+    int q=0;
+    int sum1=0;
+    int sum2=0;
+    void solve(String s, String t)
+    {
+        for (int i=0; i<s.length(); i++) {
+            if (s.charAt(i)=='?')
+                q++;
+            else {
+                letters1[s.charAt(i)-'a']++;
+                sum1++;
+            }
+        }
+        if (q==0) {
+            out.println(s);
+            return;
+        }
+        for (int i=0; i<t.length(); i++)  {
+            letters1[t.charAt(i)-'a']++;
+            sum2++;
+        }
+        List<Character> replace=new ArrayList<>();
+        while (q>0) {
+            for (int i =0; i<ALPHA; i++) {
+                if (letters1[i]>=letters2[i])
+                    letters1[i] -= letters2[i];
+                else if (q>0) // ne to replace ?
+                {
+                    int c=letters2[i]-letters1[i];
+                    q -= c;
+                    while (c-->0)
+                        replace.add((char)('a'+i));
+                }
+                else
+                    break;
+            }
+        }
+        StringBuilder sb=new StringBuilder();
+        int r=0; // replacement index
+        for (int i=0; i<s.length(); i++) {
+            if (s.charAt(i)=='?')
+                sb.append(replace.get(r++));
+            else
+                sb.append(s.charAt(i));
+        }
+        out.println(sb.toString());
+    }
+    
+    static Scanner sc = new Scanner(System.in);
+    public static void main(String[] args)
+    {     
+        
+    }
+}
