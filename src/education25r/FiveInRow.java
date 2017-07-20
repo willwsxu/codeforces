@@ -1,3 +1,5 @@
+package education25r;
+
 
 import java.io.File;
 import java.io.FileReader;
