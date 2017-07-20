@@ -1,4 +1,5 @@
 
+import static java.lang.System.out;
 import java.util.Arrays;
 import java.util.Scanner;
 
@@ -18,21 +19,45 @@ public class MultiJudgeSolving {
         k= sc.nextInt();  //1 ≤ k ≤ 10^9
         A = ria(N);
     }
-    int solve()
+    
+    MultiJudgeSolving(int a[], int k)
     {
-        Arrays.sort(A);
+        N=a.length;
+        A=a;
+        this.k=k;
+    }
+    void solve()
+    {
+        Arrays.sort(A); // sort tasks from easy to hard
         int extra=0;
-        int p=lowerBound(A, 2*k);
+        int lastMax=k;
+        int p=upperBound(A, -1, 2*lastMax); // find the task that is too hard A[p]>2k
         while (p<N) {
-            
+            //out.println("p="+p);
+            if (p>0 && A[p-1]>k)
+                lastMax = A[p-1]; // pick most difficult completed so far
+            while (A[p]>2*lastMax) { // find an extra task that is twice as hard, until A[p]<=2k
+                lastMax <<= 1;
+                extra++;
+            }
+            //out.println("extra="+extra+" lastMax="+lastMax+" p="+p);
+            p=upperBound(A, p-1, 2*lastMax);
         }
-        return extra;
+        out.println(extra);
+    }
+    
+    static void test()
+    {
+        new MultiJudgeSolving(new int[]{2, 1, 9}, 3).solve();
+        new MultiJudgeSolving(new int[]{2, 1, 24}, 3).solve();
+        new MultiJudgeSolving(new int[]{2, 1, 3,3,3,3,3,24}, 3).solve();
+        new MultiJudgeSolving(new int[]{10, 3, 6, 3}, 20).solve();
     }
     
     static Scanner sc = new Scanner(System.in);
     public static void main(String[] args)
     {        
-        
+        new MultiJudgeSolving().solve();
     }
     
     public static int[] ria(int N) { // shared code
@@ -41,15 +66,15 @@ public class MultiJudgeSolving {
             L[i]=sc.nextInt();
         return L;
     }   
-    
-    public static int lowerBound(int[] a, long k) { // shared code
+        
+    public static int upperBound(int[] a, int start, long k) { // shared code
         int n = a.length;
-        if (a[n-1] < k)
+        if (a[n-1] <= k)
             return n;
-        int l = -1, r = n - 1;
+        int l = start, r = n - 1;
         while (r - l > 1) {
             int mid = (l + r) >> 1;
-            if (a[mid] >= k) {
+            if (a[mid] > k) {
                 r = mid;
             } else {
                 l = mid;
