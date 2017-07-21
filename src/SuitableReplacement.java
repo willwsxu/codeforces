@@ -1,6 +1,7 @@
 
 import static java.lang.System.out;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
@@ -26,8 +27,10 @@ public class SuitableReplacement {
     int []letters1=new int[ALPHA];        
     int []letters2=new int[ALPHA];
     int q=0;
-    int sum1=0;
-    int sum2=0;
+    SuitableReplacement(String s, String t)
+    {
+        solve(s,t);
+    }
     void solve(String s, String t)
     {
         for (int i=0; i<s.length(); i++) {
@@ -35,7 +38,6 @@ public class SuitableReplacement {
                 q++;
             else {
                 letters1[s.charAt(i)-'a']++;
-                sum1++;
             }
         }
         if (q==0) {
@@ -43,20 +45,25 @@ public class SuitableReplacement {
             return;
         }
         for (int i=0; i<t.length(); i++)  {
-            letters1[t.charAt(i)-'a']++;
-            sum2++;
+            letters2[t.charAt(i)-'a']++;
         }
+        //out.println(Arrays.toString(letters1));
+        //out.println(Arrays.toString(letters2));
         List<Character> replace=new ArrayList<>();
         while (q>0) {
+            //out.println("q="+q);
             for (int i =0; i<ALPHA; i++) {
+                if (letters2[i]==0)
+                    continue;
                 if (letters1[i]>=letters2[i])
                     letters1[i] -= letters2[i];
-                else if (q>0) // ne to replace ?
+                else if (q>0) // need to replace ?
                 {
                     int c=letters2[i]-letters1[i];
                     q -= c;
                     while (c-->0)
                         replace.add((char)('a'+i));
+                    letters1[i]=0; //bug fix, reset to 0
                 }
                 else
                     break;
@@ -72,10 +79,15 @@ public class SuitableReplacement {
         }
         out.println(sb.toString());
     }
-    
+    static void test()
+    {
+        new SuitableReplacement("?aa?", "ab");
+        new SuitableReplacement("??b?", "za");
+        new SuitableReplacement("abcd", "abacaba");
+    }
     static Scanner sc = new Scanner(System.in);
     public static void main(String[] args)
     {     
-        
+        new SuitableReplacement();
     }
 }
