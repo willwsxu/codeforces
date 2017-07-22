@@ -17,7 +17,8 @@ import java.util.Scanner;
  * You should replace all '?' characters with small Latin letters in such a way 
  * that the suitability of string s is maximal.
  */
-
+// Algorithms: count letter frequency in t and s, and # of ?
+// check each letter count in t, match count in s, or use ? if not enough
 public class SuitableReplacement {
     SuitableReplacement()
     {
