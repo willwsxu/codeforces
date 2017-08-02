@@ -39,7 +39,8 @@ public class MinLabel {
             List<Integer> a = dag.adj(i);
             outgoing[i]=a.size();
             IntPair e=new IntPair(i+1, outgoing[i]);
-            sorted.add(e);
+            if ( outgoing[i]<=1 )
+                sorted.add(e);
         }
         //out.println(sorted);
         int ans[]=new int[dag.V()];
@@ -53,12 +54,12 @@ public class MinLabel {
             
             // remove any edge connected to this vertex
             List<Integer> r = dagr.adj(e.int1()-1);
-            for (int j=0; j<r.size(); j++) {
-                //List<Integer> uL=dag.adj(r.get(j)); // find u conneced to v
+            for (int j=0; j<r.size(); j++) {  // going through each vertex connected to e
                 outgoing[r.get(j)]--;
-                IntPair out = new IntPair(r.get(j)+1, outgoing[r.get(j)]);
-                sorted.add(out);  // let old items become obsolete, don't call remove
-                //uL.remove(new Integer(e.int1()-1));
+                if ( outgoing[r.get(j)] ==0 ) {
+                    IntPair out = new IntPair(r.get(j)+1, outgoing[r.get(j)]);
+                    sorted.add(out);  // let old items become obsolete, don't call remove
+                }
             }
         }
         for (int b: ans) {
