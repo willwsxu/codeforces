@@ -34,9 +34,11 @@ public class MinLabel {
         Comparator<IntPair> cmp1 = (e1,e2)->e1.int2()-e2.int2();
         Comparator<IntPair> cmp2 = (e1,e2)->e2.int1()-e1.int1();
         PriorityQueue<IntPair> sorted = new PriorityQueue<>(cmp1.thenComparing(cmp2));
+        int outgoing[]=new int[dag.V()];
         for (int i=0; i<dag.V(); i++) {
             List<Integer> a = dag.adj(i);
-            IntPair e=new IntPair(i+1, a.size());
+            outgoing[i]=a.size();
+            IntPair e=new IntPair(i+1, outgoing[i]);
             sorted.add(e);
         }
         //out.println(sorted);
@@ -52,10 +54,11 @@ public class MinLabel {
             // remove any edge connected to this vertex
             List<Integer> r = dagr.adj(e.int1()-1);
             for (int j=0; j<r.size(); j++) {
-                List<Integer> uL=dag.adj(r.get(j)); // find u conneced to v
-                IntPair out = new IntPair(r.get(j)+1, uL.size()-1);
+                //List<Integer> uL=dag.adj(r.get(j)); // find u conneced to v
+                outgoing[r.get(j)]--;
+                IntPair out = new IntPair(r.get(j)+1, outgoing[r.get(j)]);
                 sorted.add(out);  // let old items become obsolete, don't call remove
-                uL.remove(new Integer(e.int1()-1));
+                //uL.remove(new Integer(e.int1()-1));
             }
         }
         for (int b: ans) {
