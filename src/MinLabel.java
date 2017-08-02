@@ -2,12 +2,10 @@
 import static java.lang.System.out;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashSet;
+import java.util.Comparator;
 import java.util.List;
 import java.util.PriorityQueue;
 import java.util.Scanner;
-import java.util.Set;
-import java.util.TreeSet;
 
 // TreeSet can not store item when IntPair.second is not unique, even overrides
 // HashSet can store IntPair even if second is duplicate
@@ -33,7 +31,9 @@ public class MinLabel {
     void solve()
     {
         // sort vertex by outgoing edges
-        PriorityQueue<IntPair> sorted = new PriorityQueue<>((e1,e2)->e1.int2()-e2.int2());
+        Comparator<IntPair> cmp1 = (e1,e2)->e1.int2()-e2.int2();
+        Comparator<IntPair> cmp2 = (e1,e2)->e2.int1()-e1.int1();
+        PriorityQueue<IntPair> sorted = new PriorityQueue<>(cmp1.thenComparing(cmp2));
         for (int i=0; i<dag.V(); i++) {
             List<Integer> a = dag.adj(i);
             IntPair e=new IntPair(i+1, a.size());
