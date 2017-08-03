@@ -1,4 +1,9 @@
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import static java.lang.System.out;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -6,6 +11,7 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.PriorityQueue;
 import java.util.Scanner;
+import java.util.StringTokenizer;
 
 // TreeSet can not store item when IntPair.second is not unique, even overrides
 // HashSet can store IntPair even if second is duplicate
@@ -62,14 +68,19 @@ public class MinLabel {
                 }
             }
         }
-        for (int b: ans) {
-            out.print(b);
-            out.print(" ");
-        }
-        out.println();
+        fastPrint(ans);
     }
         
-    static Scanner sc = new Scanner(System.in);
+    static void fastPrint(int ans[])
+    {
+        StringBuilder sb = new StringBuilder();
+        for (int b: ans) {
+            sb.append(b);
+            sb.append(" ");
+        }
+        out.println(sb.toString());        
+    }
+    static MyScannerX sc = new MyScannerX();
     public static void main(String[] args)
     {        
         new MinLabel().solve();
@@ -147,4 +158,50 @@ class IntPair  // pair of int
     {
         return first+":"+second;
     }
+}
+
+class MyScannerX {
+    BufferedReader br;
+    StringTokenizer st;
+    public MyScannerX() {
+        br = new BufferedReader(new InputStreamReader(System.in));
+    }
+
+    String next() {
+        while (st == null || !st.hasMoreElements()) {
+            try {
+                st = new StringTokenizer(br.readLine());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        return st.nextToken();
+    }
+
+    int nextInt() {
+        return Integer.parseInt(next());
+    }
+
+    long nextLong() {
+        return Long.parseLong(next());
+    }
+
+    String nextLine(){
+        String str = "";
+        try {
+           str = br.readLine();
+        } catch (IOException e) {
+           e.printStackTrace();
+        }
+        return str;
+    }
+    
+    public int ni()
+    {
+        return nextInt();
+    }     
+    public long nl()
+    {
+        return nextLong();
+    }   
 }
