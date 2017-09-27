@@ -1,6 +1,7 @@
 
 import static java.lang.System.out;
 import java.util.Arrays;
+import java.util.Scanner;
 
 
 public class ArrayQuery {
@@ -19,7 +20,26 @@ public class ArrayQuery {
     }
     Query q[];
     
-    
+    ArrayQuery()
+    {
+        int n=sc.nextInt();
+        int Q=sc.nextInt();
+        int m=sc.nextInt();
+        a= new int[n];
+        for (int i=0; i<n; i++)
+            a[i]=sc.nextInt();
+        q=new Query[Q];
+        for (int i=0; i<Q; i++) {
+            int t=sc.nextInt();
+            int l=sc.nextInt();
+            int r=sc.nextInt();            
+            q[i]=new Query(t,l,r);
+        }
+        b=new int[m];
+        for (int i=0; i<m; i++)
+            b[i]=sc.nextInt();
+        reverseQuery();
+    }
     ArrayQuery(int a[], Query q[], int b[] )
     {
         this.a=a;
@@ -63,7 +83,7 @@ public class ArrayQuery {
                     b[j] = reverseA(b[j], q[i].left, q[i].right);                    
                 }
             }
-            out.println(Arrays.toString(b));
+            //out.println(Arrays.toString(b));
         }
         StringBuilder sb=new StringBuilder();
         for (int j=0; j<b.length; j++) {
@@ -81,8 +101,9 @@ public class ArrayQuery {
         q[2]=new Query(1,1,6);
         new ArrayQuery(new int[]{1,2,3,4,5,6}, q, new int[]{2,2,1,5,3});
     }
+    static Scanner sc = new Scanner(System.in);
     public static void main(String[] args)
     {
-        test();
+        new ArrayQuery();
     }
 }
