@@ -1,6 +1,7 @@
 
 import static java.lang.System.out;
 import java.util.Arrays;
+import java.util.Scanner;
 import java.util.TreeSet;
 
 
@@ -18,11 +19,29 @@ public class TurnOffTV {
     }
     int diffCount[];
     int prefixSum[];
-    int segments[];  //0 ≤ li ≤ ri ≤ 10^9, need to compress time interval
+    Segment sg[];  //0 ≤ li ≤ ri ≤ 10^9, need to compress time interval
     // compress segment [l,r] into 3 moments, l-1, l, and r, why this work?
     TreeSet<Integer> moments=new TreeSet<>(); 
     
+    TurnOffTV()
+    {
+        int n=sc.nextInt();
+        sg=new Segment[n];
+        for (int i=0; i<n; i++)
+        {
+            int l=sc.nextInt();
+            int r=sc.nextInt();       
+            sg[i]=new Segment(l,r);
+        }
+        solve(n);
+    }
+    
     TurnOffTV(int N, Segment sg[])
+    {
+        this.sg=sg;
+        solve(N);
+    }
+    void solve(int N)
     {
         for (int i=0; i<N; i++)
         {
@@ -77,8 +96,9 @@ public class TurnOffTV {
         sg[2]=new Segment(3,4);               
         new TurnOffTV(3, sg);                       
     }
+    static Scanner sc = new Scanner(System.in);
     public static void main(String[] args)
     {
-        test();
+        new TurnOffTV();
     }
 }
