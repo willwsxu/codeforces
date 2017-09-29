@@ -1,6 +1,9 @@
 
 import static java.lang.System.out;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 import java.util.Scanner;
 import java.util.TreeSet;
 
@@ -51,10 +54,11 @@ public class TurnOffTV {
             moments.add(sg[i].right);
         }
         diffCount = new int[moments.size()+1];
+        List<Integer> mm= new ArrayList(moments);
         for (int i=0; i<N; i++)
         {
-            int l=moments.headSet(sg[i].left).size();
-            int r=moments.headSet(sg[i].right).size();
+            int l=Collections.binarySearch(mm, sg[i].left);
+            int r=Collections.binarySearch(mm, sg[i].right);
             //out.println("l="+l+" r="+r);
             diffCount[l] += 1;
             diffCount[r+1] -= 1;
@@ -68,8 +72,10 @@ public class TurnOffTV {
         //out.println(Arrays.toString(prefixSum));
         for (int i=0; i<sg.length; i++)
         {
-            int l=moments.headSet(sg[i].left).size();
-            int r=moments.headSet(sg[i].right).size();
+            int l=Collections.binarySearch(mm, sg[i].left);
+            int r=Collections.binarySearch(mm, sg[i].right);
+            //int l=moments.headSet(sg[i].left).size();
+            //int r=moments.headSet(sg[i].right).size();
             if (prefixSum[l]>1 && prefixSum[r]>1) {
                 out.println(i+1);
                 return;
@@ -100,5 +106,6 @@ public class TurnOffTV {
     public static void main(String[] args)
     {
         new TurnOffTV();
+        //test();
     }
 }
