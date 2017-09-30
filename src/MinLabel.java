@@ -13,6 +13,7 @@ import java.util.PriorityQueue;
 import java.util.Scanner;
 import java.util.StringTokenizer;
 
+// educational round 25, 825E
 // TreeSet can not store item when IntPair.second is not unique, even overrides
 // HashSet can store IntPair even if second is duplicate
 // For this reason, PriorityQUeue is chosen to sort outgoing edges
