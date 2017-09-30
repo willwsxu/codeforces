@@ -5,6 +5,7 @@ import static java.lang.System.out;
 import java.util.Arrays;
 import java.util.Scanner;
 
+// educational round 25, 825C
 /*
  * Brief Description: n tasks with difficulty A1,..., An. He can solve these problems in arbitrary order. 
  * Though he can solve problem i with difficulty Ai only if he had already solved some problem with difficulty d>=Ai

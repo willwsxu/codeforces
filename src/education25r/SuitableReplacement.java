@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Scanner;
 
 /*
- * 825D
+ * educational round 25, 825B
  * Any two letters can be swapped positions, these operations can be performed 
  * arbitrary number of times over any pair of positions. Among all resulting strings s, 
  * you choose the one with the largest number of non-intersecting occurrences of string t. 

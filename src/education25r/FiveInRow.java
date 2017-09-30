@@ -8,6 +8,7 @@ import static java.lang.System.out;
 import java.util.Arrays;
 import java.util.Scanner;
 
+// educational round 25, 825A
 /*
  * place X on 10x10 grid, check if going to win in next move
  * no one won on current config
