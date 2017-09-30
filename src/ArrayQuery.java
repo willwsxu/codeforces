@@ -3,7 +3,8 @@ import static java.lang.System.out;
 import java.util.Arrays;
 import java.util.Scanner;
 
-
+// educational round 29, 863D
+// offline reverse processing query
 public class ArrayQuery {
     
     int a[];  // 1 ≤ ai ≤ 10^9, 1 ≤ n, q ≤ 2·10^5,
