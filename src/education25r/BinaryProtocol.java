@@ -5,7 +5,7 @@ import static java.lang.System.out;
 import java.util.Scanner;
 
 /*
- * educational round 25, A
+ * educational round 25, 825A
  * convert decimal number string to binary, each digit is encoded as # of 1's, digit are separated by a 0
  */
 public class BinaryProtocol {
