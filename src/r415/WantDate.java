@@ -1,3 +1,5 @@
+package r415;
+
 
 import static java.lang.Integer.min;
 import static java.lang.System.out;
@@ -11,7 +13,7 @@ import java.util.stream.IntStream;
  * and open the template in the editor.
  */
 
-//809A
+//contest r415, 809A
 public class WantDate {
     
     static final int  MOD=1000000007;    // 10^9 + 7

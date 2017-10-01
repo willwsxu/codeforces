@@ -1,3 +1,5 @@
+package vkcup2017r1;
+
 
 import static java.lang.System.out;
 import java.util.Scanner;
